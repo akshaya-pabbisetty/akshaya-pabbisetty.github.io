@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akshaya Pabbisetty</title>
+<meta name="description" content="Akshaya Pabbisetty — computer science student at George Mason University, LLM researcher, builder and model.">
+<meta property="og:title" content="Akshaya Pabbisetty">
+<meta property="og:description" content="Computer science at George Mason. LLM research, projects, modeling and contact.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --mist:#F3F1F7; --paper:#FBFAFD; --ink:#1C1830; --muted:#615C75;
+  --line:#DAD6E4; --cobalt:#2E3FE0; --blush:#F4C9D2; --on-cobalt:#FFFFFF;
+  --maxw:1180px; --gutter:clamp(16px,4vw,48px);
+}
+@media (prefers-color-scheme:dark){
+  :root{ --mist:#15121F; --paper:#1D1929; --ink:#EEEAF6; --muted:#A49FB8;
+    --line:#332E45; --cobalt:#8E9BFF; --blush:#E7A9B7; --on-cobalt:#15121F; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--mist);color:var(--ink);
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;font-variation-settings:"opsz" 14;
+  font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px;border-radius:2px}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--mist) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.nav .mark{font-weight:750;text-decoration:none;letter-spacing:-.01em}
+.nav ul{display:flex;gap:clamp(12px,3vw,32px);list-style:none;margin:0;padding:0;font-size:.95rem}
+.nav ul a{text-decoration:none;color:var(--muted)}
+.nav ul a:hover{color:var(--ink)}
+@media (max-width:560px){.nav .mark{display:none}.nav .wrap{justify-content:center}}
+
+/* hero */
+.hero{padding:clamp(40px,8vw,96px) 0 clamp(56px,8vw,104px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(24px,4vw,56px);align-items:center}
+.name{margin:0;font-weight:800;font-variation-settings:"opsz" 96,"wdth" 75;
+  font-size:clamp(3.6rem,13vw,10.5rem);line-height:.84;letter-spacing:-.035em;position:relative;z-index:2}
+.name span{display:block}
+.name span:last-child{color:var(--cobalt);margin-right:-30%}
+@media (max-width:820px){.name span:last-child{margin-right:0}}
+.intro{max-width:34em;margin:clamp(24px,3vw,36px) 0 0;font-size:clamp(1.1rem,1.6vw,1.3rem);line-height:1.5}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;
+  font-weight:600;text-decoration:none;border:1.5px solid var(--ink);font-size:.98rem;transition:background .15s,color .15s}
+.btn.primary{background:var(--ink);color:var(--mist)}
+.btn.primary:hover{background:var(--cobalt);border-color:var(--cobalt);color:var(--on-cobalt)}
+.btn:not(.primary):hover{background:var(--ink);color:var(--mist)}
+.portrait{width:100%;aspect-ratio:3/4;background:var(--blush);border-radius:220px 220px 6px 6px;overflow:hidden;position:relative}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.portrait .ph{position:absolute;inset:auto 0 24px;text-align:center;color:#5a2b38;font-size:.9rem}
+@media (max-width:820px){
+  .hero .wrap{grid-template-columns:1fr}
+  .portrait{max-width:300px;order:-1;border-radius:170px 170px 6px 6px}
+}
+.reveal span{animation:rise .9s cubic-bezier(.2,.7,.1,1) both}
+.reveal span:last-child{animation-delay:.12s}
+@keyframes rise{from{opacity:0;transform:translateY(.25em)}to{opacity:1;transform:none}}
+
+/* sections */
+section{padding:clamp(64px,9vw,120px) 0;border-top:1px solid var(--line)}
+.head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(32px,5vw,56px)}
+h2{margin:0;font-weight:780;font-variation-settings:"opsz" 96,"wdth" 85;
+  font-size:clamp(2.4rem,6vw,4.4rem);line-height:.95;letter-spacing:-.03em}
+.lede{color:var(--muted);max-width:30em;margin:12px 0 0}
+h3{margin:0;font-size:1.25rem;line-height:1.25;font-weight:700;letter-spacing:-.01em}
+
+/* projects */
+.paper-feature{background:var(--cobalt);color:var(--on-cobalt);border-radius:28px;
+  padding:clamp(28px,4vw,48px);margin-bottom:clamp(32px,5vw,48px);display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,48px);align-items:start}
+.paper-feature .where{font-weight:700;font-size:1rem;opacity:.85;white-space:nowrap}
+.paper-feature h3{font-size:clamp(1.5rem,2.6vw,2.1rem);font-variation-settings:"opsz" 60;letter-spacing:-.02em;max-width:22em}
+.paper-feature p{margin:14px 0 0;max-width:40em;opacity:.92}
+@media (max-width:700px){.paper-feature{grid-template-columns:1fr}}
+.projects{list-style:none;margin:0;padding:0}
+.projects li{display:grid;grid-template-columns:220px 1fr 200px;gap:12px 32px;
+  padding:24px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.projects li:first-child{border-top:1px solid var(--line)}
+.projects p{margin:0;color:var(--muted);max-width:44em}
+.stack{font-size:.92rem;color:var(--muted);text-align:right}
+@media (max-width:760px){.projects li{grid-template-columns:1fr}.stack{text-align:left}}
+.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:36px;padding:0;list-style:none}
+.skills li{padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:.92rem;background:var(--paper)}
+
+/* experience */
+.exp-grid{display:grid;grid-template-columns:1fr 2fr;gap:clamp(32px,6vw,80px)}
+@media (max-width:820px){.exp-grid{grid-template-columns:1fr}}
+.edu{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:28px;align-self:start}
+.edu p{margin:6px 0 0;color:var(--muted)}
+.edu ul{margin:18px 0 0;padding-left:1.1em}
+.edu li{margin:4px 0}
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{display:grid;grid-template-columns:150px 1fr;gap:8px 28px;padding:0 0 32px;position:relative}
+.timeline .when{color:var(--muted);font-size:.95rem;padding-top:2px;font-variant-numeric:tabular-nums}
+.timeline .org{color:var(--cobalt);font-weight:600;margin:2px 0 6px}
+.timeline p{margin:0;max-width:40em}
+@media (max-width:560px){.timeline li{grid-template-columns:1fr;gap:2px}}
+
+/* modeling */
+#modeling{background:var(--ink);color:var(--mist);border-top:0}
+#modeling .lede{color:color-mix(in srgb,var(--mist) 70%,transparent)}
+#modeling h2{color:var(--blush)}
+.gallery{columns:3 260px;column-gap:16px}
+.gallery button{all:unset;cursor:zoom-in;display:block;margin:0 0 16px;break-inside:avoid;border-radius:14px;overflow:hidden;width:100%}
+.gallery button:focus-visible{outline:3px solid var(--blush);outline-offset:3px}
+.gallery img{width:100%;height:auto;transition:transform .4s ease}
+.gallery button:hover img{transform:scale(1.03)}
+.empty{column-span:all;border:1.5px dashed color-mix(in srgb,var(--mist) 35%,transparent);border-radius:20px;padding:56px 24px;text-align:center;color:color-mix(in srgb,var(--mist) 75%,transparent)}
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(10,8,18,.92);display:none;align-items:center;justify-content:center;padding:24px}
+.lightbox.open{display:flex}
+.lightbox img{max-height:88vh;max-width:min(92vw,1100px);border-radius:8px;object-fit:contain}
+.lightbox button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:999px;
+  width:48px;height:48px;font-size:1.4rem;cursor:pointer}
+.lb-close{top:20px;right:20px}.lb-prev{left:20px;top:50%;transform:translateY(-50%)}.lb-next{right:20px;top:50%;transform:translateY(-50%)}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(32px,6vw,80px)}
+@media (max-width:820px){.contact-grid{grid-template-columns:1fr}}
+.links{list-style:none;padding:0;margin:28px 0 0}
+.links li{border-bottom:1px solid var(--line)}
+.links a{display:flex;justify-content:space-between;gap:16px;padding:16px 0;text-decoration:none;font-weight:600;font-size:1.1rem}
+.links a span{color:var(--muted);font-weight:400;font-size:.95rem;overflow-wrap:anywhere;text-align:right}
+.links a:hover{color:var(--cobalt)}
+form{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:clamp(22px,3vw,36px);display:grid;gap:18px}
+label{display:grid;gap:6px;font-weight:600;font-size:.95rem}
+input,textarea{font:inherit;font-weight:400;color:var(--ink);background:var(--mist);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;width:100%}
+input:focus,textarea:focus{border-color:var(--cobalt);outline:none}
+textarea{min-height:150px;resize:vertical}
+form .btn{justify-self:start;cursor:pointer;font:inherit;font-weight:600}
+.note{font-size:.88rem;color:var(--muted);margin:0}
+footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+.hp{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="mark" href="#top">Akshaya Pabbisetty</a>
+    <ul>
+      <li><a href="#code">GitHub</a></li>
+      <li><a href="#experience">LinkedIn</a></li>
+      <li><a href="#modeling">Modeling</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1 class="name reveal"><span>Akshaya</span><span>Pabbisetty</span></h1>
+      <p class="intro">Computer science student in George Mason's Honors College. I research how large language models can stress-test emergency alerts, build AI apps at hackathons, and work in front of the camera as a model.</p>
+      <div class="actions">
+        <a class="btn primary" href="#contact">Get in touch</a>
+        <a class="btn" href="#modeling">See modeling work</a>
+      </div>
+    </div>
+    <div class="portrait" id="portrait">
+      <span class="ph">Portrait photo goes here</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="code">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <h2>Code &amp; research</h2>
+        <p class="lede">Projects I've built, mostly with React, TypeScript and Python, plus research on LLM systems.</p>
+      </div>
+      <a class="btn" href="https://github.com/akshaya-pabbisetty" target="_blank" rel="noopener">View my GitHub</a>
+    </div>
+
+    <article class="paper-feature">
+      <div class="where">ACM CHI 2026<br>Barcelona</div>
+      <div>
+        <h3>Silicon A/B Testing for Emergency Alerts: Rapid Pre-Deployment Stress Tests with LLM Resident Agents</h3>
+        <p>Accepted paper at the PoliSim workshop. We built LLM "resident agents" that read emergency alerts the way different people would, then measured recall, confusion and compliance across simulated populations.</p>
+      </div>
+    </article>
+
+    <ul class="projects">
+      <li><h3>RebuildYou</h3><p>Full-stack AI wellness app built and deployed on AWS during a hackathon. Gemini-powered planning and coaching, with streaks and adaptive daily schedules.</p><span class="stack">React, TypeScript, AWS, Gemini</span></li>
+      <li><h3>Gymmis</h3><p>A fitness planning and workout tracking web app. In progress.</p><span class="stack">React, TypeScript</span></li>
+      <li><h3>EventGenie</h3><p>AI-powered event planner built at a hackathon, with recommendations that adapt to what you tell it.</p><span class="stack">TypeScript, JavaScript</span></li>
+      <li><h3>Emergency alert LLM pipelines</h3><p>Research assistant work at GMU: Python and JSON pipelines that process alert datasets and evaluate LLM-generated emergency recommendations.</p><span class="stack">Python, JSON</span></li>
+      <li><h3>Low-level C projects</h3><p>Linked lists, stacks, queues and manual memory management in C, built with GCC and Makefiles on Unix.</p><span class="stack">C, Unix</span></li>
+      <li><h3>Diamonds dataset analysis</h3><p>Statistical analysis and visualization of a diamonds dataset in R.</p><span class="stack">R, RStudio</span></li>
+    </ul>
+
+    <ul class="skills" aria-label="Skills">
+      <li>Python</li><li>Java</li><li>C</li><li>JavaScript</li><li>TypeScript</li><li>R</li><li>React</li><li>Vite</li><li>AWS</li><li>Gemini API</li><li>Git</li><li>Linux</li><li>Prompt engineering</li><li>LLM evaluation</li>
+    </ul>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <h2>Experience</h2>
+        <p class="lede">Internships, research, and the communities I've started and led.</p>
+      </div>
+      <a class="btn" href="https://www.linkedin.com/in/akshayapabbisetty/" target="_blank" rel="noopener">Connect on LinkedIn</a>
+    </div>
+    <div class="exp-grid">
+      <aside class="edu">
+        <h3>George Mason University</h3>
+        <p>B.S. Computer Science, Honors College<br>Expected May 2029</p>
+        <ul>
+          <li>Dean's List, Fall 2025</li>
+          <li>Mason Excellence Scholarship</li>
+          <li>Data Structures, Linear Algebra, Probability &amp; Statistics, Low-Level C</li>
+        </ul>
+      </aside>
+      <ol class="timeline" reversed>
+        <li><span class="when">Aug 2026 – now</span><div><h3>Marketing Operations Lead</h3><div class="org">AI Club, George Mason</div><p>Running outreach, social media and promotion for the club's workshops, speaker sessions and AI/ML events.</p></div></li>
+        <li><span class="when">Jan 2026 – now</span><div><h3>Software Development &amp; Market Research Intern</h3><div class="org">BlogIQ.ai</div><p>Helping build an LLM-based blogging platform in Python, evaluating AI output quality, and researching competitors to guide the product.</p></div></li>
+        <li><span class="when">Nov 2025 – now</span><div><h3>Research Assistant, LLM Systems</h3><div class="org">George Mason University</div><p>Building data and evaluation pipelines for LLM analysis of emergency alerts, leading to a CHI 2026 workshop paper.</p></div></li>
+        <li><span class="when">Aug – Dec 2025</span><div><h3>Honors Research: AI in Global Cancer Diagnosis</h3><div class="org">GMU Honors College</div><p>Studied how AI can support early cancer detection in low-resource healthcare settings, and what stands in the way.</p></div></li>
+        <li><span class="when">Aug 2023 – now</span><div><h3>Co-Founder &amp; Team Lead</h3><div class="org">Insighted Initiative</div><p>Co-founded a student nonprofit teaching STEM to 150+ students in 30+ countries. I built the website and lead a distributed team of educators.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="modeling">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <h2>Modeling</h2>
+        <p class="lede">Selected shoots and editorial work. Tap any photo to see it full size.</p>
+      </div>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <h2>Let's talk</h2>
+      <p class="lede">For internships, research, collaborations or modeling bookings, send a message and I'll get back to you.</p>
+      <ul class="links">
+        <li><a href="mailto:akshayapabbisetty@gmail.com">Email <span>akshayapabbisetty@gmail.com</span></a></li>
+        <li><a href="https://www.linkedin.com/in/akshayapabbisetty/" target="_blank" rel="noopener">LinkedIn <span>/in/akshayapabbisetty</span></a></li>
+        <li><a href="https://github.com/akshaya-pabbisetty" target="_blank" rel="noopener">GitHub <span>@akshaya-pabbisetty</span></a></li>
+      </ul>
+    </div>
+    <form action="https://formsubmit.co/akshayapabbisetty@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New message from your website">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label>Your name<input name="name" required autocomplete="name"></label>
+      <label>Your email<input type="email" name="email" required autocomplete="email"></label>
+      <label>What's it about?<input name="topic" placeholder="Internship, modeling booking, collaboration…"></label>
+      <label>Message<textarea name="message" required></textarea></label>
+      <button class="btn primary" type="submit">Send message</button>
+      <p class="note">Your message goes straight to my inbox.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">© <span id="yr">2026</span> Akshaya Pabbisetty</div></footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <img alt="">
+  <button class="lb-close" aria-label="Close">×</button>
+  <button class="lb-prev" aria-label="Previous photo">‹</button>
+  <button class="lb-next" aria-label="Next photo">›</button>
+</div>
+
+<script>
+/* To add photos: put them in images/modeling/ and list them here.
+   The first one also becomes the portrait at the top of the page. */
+const PHOTOS = [
+];
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+const gallery = document.getElementById('gallery');
+const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img');
+let idx = 0, lastFocus = null;
+
+if (!PHOTOS.length) {
+  gallery.style.columns='auto';gallery.innerHTML = '<div class="empty">Modeling photos are on their way.</div>';
+} else {
+  const p = document.getElementById('portrait');
+  p.innerHTML = `<img src="${PHOTOS[0].src}" alt="Portrait of Akshaya Pabbisetty">`;
+  PHOTOS.forEach((ph, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Open photo ' + (i + 1));
+    b.innerHTML = `<img src="${ph.src}" alt="${ph.alt || 'Modeling photo of Akshaya'}" loading="lazy">`;
+    b.onclick = () => open(i);
+    gallery.appendChild(b);
+  });
+}
+function show(i){ idx = (i + PHOTOS.length) % PHOTOS.length; lbImg.src = PHOTOS[idx].src; lbImg.alt = PHOTOS[idx].alt || 'Modeling photo'; }
+function open(i){ lastFocus = document.activeElement; show(i); lb.classList.add('open'); lb.querySelector('.lb-close').focus(); }
+function close(){ lb.classList.remove('open'); lastFocus && lastFocus.focus(); }
+lb.querySelector('.lb-close').onclick = close;
+lb.querySelector('.lb-prev').onclick = () => show(idx - 1);
+lb.querySelector('.lb-next').onclick = () => show(idx + 1);
+lb.addEventListener('click', e => { if (e.target === lb) close(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') close();
+  if (e.key === 'ArrowLeft') show(idx - 1);
+  if (e.key === 'ArrowRight') show(idx + 1);
+});
+</script>
+</body>
+</html>
