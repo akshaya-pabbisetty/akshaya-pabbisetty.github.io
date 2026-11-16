@@ -36,10 +36,25 @@ img{display:block;max-width:100%}
   backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
 .nav .mark{font-weight:750;text-decoration:none;letter-spacing:-.01em}
-.nav ul{display:flex;gap:clamp(12px,3vw,32px);list-style:none;margin:0;padding:0;font-size:.95rem}
-.nav ul a{text-decoration:none;color:var(--muted)}
-.nav ul a:hover{color:var(--ink)}
-@media (max-width:560px){.nav .mark{display:none}.nav .wrap{justify-content:center}}
+.menu{position:relative}
+.menu-btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:10px;font-weight:650;padding:8px 14px 8px 10px;
+  border:1.5px solid var(--ink);border-radius:999px;font-size:.95rem}
+.menu-btn:hover,.menu-btn[aria-expanded="true"]{background:var(--ink);color:var(--mist)}
+.menu-btn:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+.bars{display:grid;gap:3px;width:16px}.bars i{display:block;height:2px;background:currentColor;border-radius:2px}
+.menu-list{position:absolute;top:calc(100% + 10px);left:0;min-width:220px;list-style:none;margin:0;padding:8px;
+  background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 40px -16px rgba(20,35,63,.35)}
+.menu-list a{display:block;padding:11px 14px;border-radius:9px;text-decoration:none;font-weight:600;font-size:1.05rem}
+.menu-list a:hover{background:var(--mist)}
+.menu-list a[aria-current="page"]{background:var(--cobalt);color:var(--on-cobalt)}
+
+/* pages: only one shows at a time */
+.page{display:none;min-height:calc(100vh - 61px)}
+.page.active{display:block}
+.page.active.hero{display:flex;align-items:center}
+.page.active.hero>.wrap{width:100%}
+@media (prefers-reduced-motion:no-preference){.page.active{animation:pagein .35s ease both}}
+@keyframes pagein{from{opacity:0}to{opacity:1}}
 
 /* hero */
 .hero{padding:clamp(40px,8vw,96px) 0 clamp(56px,8vw,104px)}
@@ -68,7 +83,7 @@ img{display:block;max-width:100%}
 @keyframes rise{from{opacity:0;transform:translateY(.25em)}to{opacity:1;transform:none}}
 
 /* sections */
-section{padding:clamp(64px,9vw,120px) 0;border-top:1px solid var(--line)}
+section{padding:clamp(48px,7vw,96px) 0}
 .head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(32px,5vw,56px)}
 h2{margin:0;font-weight:780;font-variation-settings:"opsz" 96,"wdth" 85;
   font-size:clamp(2.4rem,6vw,4.4rem);line-height:.95;letter-spacing:-.03em}
@@ -161,12 +176,17 @@ h3{margin:0;font-size:1.25rem;line-height:1.25;font-weight:700;letter-spacing:-.
 .gallery{columns:3 260px;column-gap:16px}
 .gallery button{all:unset;cursor:zoom-in;display:block;margin:0 0 16px;break-inside:avoid;border-radius:14px;overflow:hidden;width:100%}
 .gallery button:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px}
+.gallery button{position:relative}
 .gallery img{width:100%;height:auto;transition:transform .4s ease}
+.credit{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;font-size:.78rem;color:#fff;
+  background:linear-gradient(transparent,rgba(10,16,30,.7));pointer-events:none}
+.lb-fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:10px}
+.lb-fig figcaption{color:rgba(255,255,255,.85);font-size:.9rem}
 .gallery button:hover img{transform:scale(1.03)}
 .empty{column-span:all;border:1.5px dashed rgba(255,255,255,.35);border-radius:20px;padding:56px 24px;text-align:center;color:rgba(255,255,255,.75)}
 .lightbox{position:fixed;inset:0;z-index:50;background:rgba(10,8,18,.92);display:none;align-items:center;justify-content:center;padding:24px}
 .lightbox.open{display:flex}
-.lightbox img{max-height:88vh;max-width:min(92vw,1100px);border-radius:8px;object-fit:contain}
+.lightbox img{max-height:82vh;max-width:min(92vw,1100px);border-radius:8px;object-fit:contain}
 .lightbox button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:999px;
   width:48px;height:48px;font-size:1.4rem;cursor:pointer}
 .lb-close{top:20px;right:20px}.lb-prev{left:20px;top:50%;transform:translateY(-50%)}.lb-next{right:20px;top:50%;transform:translateY(-50%)}
@@ -194,17 +214,23 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 
 <nav class="nav" aria-label="Main">
   <div class="wrap">
-    <a class="mark" href="#top">Akshaya Pabbisetty</a>
-    <ul>
-      <li><a href="#code">Projects</a></li>
-      <li><a href="#experience">LinkedIn</a></li>
-      <li><a href="#modeling">Modeling</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <div class="menu">
+      <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu-list">
+        <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>Menu
+      </button>
+      <ul class="menu-list" id="menu-list" hidden>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#code">Projects</a></li>
+        <li><a href="#experience">LinkedIn</a></li>
+        <li><a href="#modeling">Modeling</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <a class="mark" href="#home">Akshaya Pabbisetty</a>
   </div>
 </nav>
 
-<header class="hero" id="top">
+<header class="hero page" id="home">
   <div class="wrap">
     <div>
       <h1 class="name reveal"><span>Akshaya</span><span>Pabbisetty</span></h1>
@@ -215,13 +241,13 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
       </div>
     </div>
     <div class="portrait" id="portrait">
-      <span class="ph">Portrait photo goes here</span>
+      <img src="images/portrait.jpg" alt="Headshot of Akshaya Pabbisetty" width="900" height="1200">
     </div>
   </div>
 </header>
 
 <main>
-<section id="code">
+<section class="page" id="code">
   <div class="wrap">
     <div class="head">
       <div>
@@ -248,7 +274,7 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   </div>
 </section>
 
-<section id="experience">
+<section class="page" id="experience">
   <div class="wrap">
     <div class="head">
       <div>
@@ -278,19 +304,19 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   </div>
 </section>
 
-<section id="modeling">
+<section class="page" id="modeling">
   <div class="wrap">
     <div class="head">
       <div>
         <h2>Modeling</h2>
-        <p class="lede">Selected shoots and editorial work. Tap any photo to see it full size.</p>
+        <p class="lede">Selected shoots, photographed by Tejas Sai Pallavalli and Hari Vemula Photography. Tap any photo to see it full size.</p>
       </div>
     </div>
     <div class="gallery" id="gallery"></div>
   </div>
 </section>
 
-<section id="contact">
+<section class="page" id="contact">
   <div class="wrap contact-grid">
     <div>
       <h2>Let's talk</h2>
@@ -319,16 +345,34 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <footer><div class="wrap">© <span id="yr">2026</span> Akshaya Pabbisetty</div></footer>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
-  <img alt="">
+  <figure class="lb-fig"><img alt=""><figcaption id="lb-cap"></figcaption></figure>
   <button class="lb-close" aria-label="Close">×</button>
   <button class="lb-prev" aria-label="Previous photo">‹</button>
   <button class="lb-next" aria-label="Next photo">›</button>
 </div>
 
 <script>
-/* To add photos: put them in images/modeling/ and list them here.
-   The first one also becomes the portrait at the top of the page. */
+/* To add photos: put them in images/modeling/ and list them here, with the photographer's name. */
 const PHOTOS = [
+  { src: 'images/modeling/01.jpg', alt: 'Akshaya in an embroidered green lehenga, leaning on a tree', credit: 'Tejas Sai Pallavalli' },
+  { src: 'images/modeling/02.jpg', alt: 'Akshaya in a green lehenga, seated on wooden steps in the woods', credit: 'Tejas Sai Pallavalli' },
+  { src: 'images/modeling/03.jpg', alt: 'Akshaya in a green lehenga, glancing to the side by a tree', credit: 'Tejas Sai Pallavalli' },
+  { src: 'images/modeling/04.jpg', alt: 'Akshaya in a green lehenga, smiling on wooden steps', credit: 'Tejas Sai Pallavalli' },
+  { src: 'images/modeling/05.jpg', alt: 'Akshaya in a green lehenga on a lakeside dock', credit: 'Tejas Sai Pallavalli' },
+  { src: 'images/modeling/06.jpg', alt: 'Akshaya in an orange and magenta saree beside a tree', credit: 'Tejas Sai Pallavalli' },
+  { src: 'images/modeling/07.jpg', alt: 'Akshaya smiling in an orange and magenta saree by the water', credit: 'Tejas Sai Pallavalli' },
+  { src: 'images/modeling/08.jpg', alt: 'Akshaya laughing in an orange saree in front of a fountain', credit: 'Tejas Sai Pallavalli' },
+  { src: 'images/modeling/09.jpg', alt: 'Akshaya in a burgundy slip dress against a red backdrop', credit: 'Hari Vemula Photography' },
+  { src: 'images/modeling/10.jpg', alt: 'Akshaya in a burgundy dress with arms crossed', credit: 'Hari Vemula Photography' },
+  { src: 'images/modeling/11.jpg', alt: 'Akshaya in a red sweater dress under a chandelier', credit: 'Hari Vemula Photography' },
+  { src: 'images/modeling/12.jpg', alt: 'Akshaya in a red sweater dress, hand at her hair', credit: 'Hari Vemula Photography' },
+  { src: 'images/modeling/13.jpg', alt: 'Akshaya seated on a red velvet sofa under a chandelier', credit: 'Hari Vemula Photography' },
+  { src: 'images/modeling/14.jpg', alt: 'Akshaya in a red sweater dress on a velvet sofa', credit: 'Hari Vemula Photography' },
+  { src: 'images/modeling/15.jpg', alt: 'Akshaya in a black dress with a vintage microphone', credit: 'Hari Vemula Photography' },
+  { src: 'images/modeling/16.jpg', alt: 'Akshaya in a black dress beside a vintage microphone', credit: 'Hari Vemula Photography' },
+  { src: 'images/modeling/17.jpg', alt: 'Akshaya in a black dress, hand on hip, by a microphone', credit: 'Hari Vemula Photography' },
+  { src: 'images/modeling/18.jpg', alt: 'Akshaya in a pink sequin dress seated on a white cube', credit: 'Hari Vemula Photography' },
+  { src: 'images/modeling/19.jpg', alt: 'Akshaya in a pink sequin dress, chin resting on her hand', credit: 'Hari Vemula Photography' }
 ];
 
 document.getElementById('yr').textContent = new Date().getFullYear();
@@ -339,17 +383,16 @@ let idx = 0, lastFocus = null;
 if (!PHOTOS.length) {
   gallery.style.columns='auto';gallery.innerHTML = '<div class="empty">Modeling photos are on their way.</div>';
 } else {
-  const p = document.getElementById('portrait');
-  p.innerHTML = `<img src="${PHOTOS[0].src}" alt="Portrait of Akshaya Pabbisetty">`;
   PHOTOS.forEach((ph, i) => {
     const b = document.createElement('button');
-    b.setAttribute('aria-label', 'Open photo ' + (i + 1));
-    b.innerHTML = `<img src="${ph.src}" alt="${ph.alt || 'Modeling photo of Akshaya'}" loading="lazy">`;
+    b.setAttribute('aria-label', 'Open photo ' + (i + 1) + ', photo by ' + ph.credit);
+    b.innerHTML = `<img src="${ph.src}" alt="${ph.alt}" loading="lazy"><span class="credit">Photo: ${ph.credit}</span>`;
     b.onclick = () => open(i);
     gallery.appendChild(b);
   });
 }
-function show(i){ idx = (i + PHOTOS.length) % PHOTOS.length; lbImg.src = PHOTOS[idx].src; lbImg.alt = PHOTOS[idx].alt || 'Modeling photo'; }
+const lbCap = document.getElementById('lb-cap');
+function show(i){ idx = (i + PHOTOS.length) % PHOTOS.length; lbImg.src = PHOTOS[idx].src; lbImg.alt = PHOTOS[idx].alt; lbCap.textContent = 'Photo: ' + PHOTOS[idx].credit; }
 function open(i){ lastFocus = document.activeElement; show(i); lb.classList.add('open'); lb.querySelector('.lb-close').focus(); }
 function close(){ lb.classList.remove('open'); lastFocus && lastFocus.focus(); }
 lb.querySelector('.lb-close').onclick = close;
@@ -415,8 +458,26 @@ function setOpen(open){
 }
 doors.forEach(d => d.onclick = () => setOpen(true));
 document.getElementById('close-cab').onclick = () => { setOpen(false); doors[0].focus(); };
-document.querySelectorAll('a[href="#code"]').forEach(a => a.addEventListener('click', () => setTimeout(() => setOpen(true), 450)));
-if (location.hash === '#code') setTimeout(() => setOpen(true), 500);
+
+/* Page switching: the Menu in the top left shows one page at a time. */
+const pages = [...document.querySelectorAll('.page')];
+const menuBtn = document.getElementById('menu-btn'), menuList = document.getElementById('menu-list');
+function setMenu(open){ menuList.hidden = !open; menuBtn.setAttribute('aria-expanded', String(open)); }
+menuBtn.onclick = () => { setMenu(menuList.hidden); if (!menuList.hidden) menuList.querySelector('a').focus(); };
+document.addEventListener('click', e => { if (!e.target.closest('.menu')) setMenu(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menuList.hidden) { setMenu(false); menuBtn.focus(); } });
+function route(){
+  const id = (location.hash || '#home').slice(1);
+  const page = pages.find(p => p.id === id) || pages[0];
+  pages.forEach(p => p.classList.toggle('active', p === page));
+  menuList.querySelectorAll('a').forEach(a => a.getAttribute('href') === '#' + page.id ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
+  setMenu(false);
+  window.scrollTo(0, 0);
+  if (page.id !== 'code') setOpen(false);
+  else setTimeout(() => setOpen(true), 350);
+}
+window.addEventListener('hashchange', route);
+route();
 </script>
 </body>
 </html>
