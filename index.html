@@ -34,9 +34,16 @@ img{display:block;max-width:100%}
 /* nav */
 .nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--mist) 88%,transparent);
   backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.nav .wrap{display:flex;align-items:center;height:60px;gap:16px}
+.nav .mark{margin-right:auto}
 .nav .mark{font-weight:750;text-decoration:none;letter-spacing:-.01em}
 .menu{position:relative}
+.toplinks{display:flex;gap:clamp(14px,2.4vw,28px);list-style:none;margin:0;padding:0;font-size:.95rem}
+.toplinks a{text-decoration:none;color:var(--muted);padding:6px 0;border-bottom:2px solid transparent}
+.toplinks a:hover{color:var(--ink)}
+.toplinks a[aria-current="page"]{color:var(--ink);font-weight:650;border-bottom-color:var(--cobalt)}
+@media (max-width:820px){.toplinks{display:none}}
+@media (max-width:380px){.nav .mark{font-size:.92rem}}
 .menu-btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:10px;font-weight:650;padding:8px 14px 8px 10px;
   border:1.5px solid var(--ink);border-radius:999px;font-size:.95rem}
 .menu-btn:hover,.menu-btn[aria-expanded="true"]{background:var(--ink);color:var(--mist)}
@@ -149,9 +156,20 @@ h3{margin:0;font-size:1.25rem;line-height:1.25;font-weight:700;letter-spacing:-.
 .reader .meta{color:#1D3461;font-weight:600;margin:6px 0 10px}
 .reader p{margin:0;max-width:44em}
 .reader .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+a.book{text-decoration:none}
+.pop{position:fixed;inset:0;z-index:60;background:rgba(14,20,32,.55);display:flex;align-items:center;justify-content:center;padding:24px}
+.pop[hidden]{display:none}
+.pop-card{background:#FBF6EC;color:#1E2229;border:1px solid #C9A877;border-radius:16px;padding:28px;max-width:400px;text-align:center;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+@media (prefers-reduced-motion:no-preference){.pop:not([hidden]) .pop-card{animation:popin .25s cubic-bezier(.2,.8,.2,1.2)}}
+@keyframes popin{from{transform:scale(.92);opacity:0}}
+.pop-card h3{margin:14px 0 8px}.pop-card p{margin:0 0 20px;color:#4A5160}
+.pop-card .btn{border-color:#1E2229;background:#1E2229;color:#FBF6EC;cursor:pointer;font:inherit;font-weight:600}
+.lock{width:30px;height:24px;margin:0 auto;border-radius:5px;background:#8A5A2E;position:relative;top:8px}
+.lock::before{content:"";position:absolute;left:6px;top:-14px;width:12px;height:12px;border:4px solid #8A5A2E;border-bottom:0;border-radius:10px 10px 0 0}
 .close-cab{all:unset;cursor:pointer;color:#5C3818;font-size:.92rem;text-decoration:underline;margin-top:14px;display:inline-block}
 .close-cab:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
-@media (max-width:560px){.shelf{padding-left:14px;padding-top:58px}.year{top:10px;bottom:auto;font-size:1.6rem}.cupboard::before{left:-18px;right:-18px}}
+@media (max-width:560px){.shelf{padding-left:6px;padding-right:6px;padding-top:58px;gap:2px}.year{top:10px;bottom:auto;font-size:1.6rem}.cupboard::before{left:-18px;right:-18px}}
 .skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:36px;padding:0;list-style:none}
 .skills li{padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:.92rem;background:var(--paper)}
 
@@ -227,6 +245,13 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
       </ul>
     </div>
     <a class="mark" href="#home">Akshaya Pabbisetty</a>
+    <ul class="toplinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#code">Projects</a></li>
+      <li><a href="#experience">LinkedIn</a></li>
+      <li><a href="#modeling">Modeling</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
   </div>
 </nav>
 
@@ -260,7 +285,7 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
     <div class="cupboard" id="cupboard">
       <div class="cab-inner" id="cab-inner">
         <div id="shelves"></div>
-        <div class="reader" id="reader" aria-live="polite"><p class="empty-note">Pick a book off the shelf to read about it.</p></div>
+        <div class="reader" id="reader" aria-live="polite"><p class="empty-note">Click a book to open the project on GitHub.</p></div>
         <button class="close-cab" id="close-cab" type="button">Close the cupboard</button>
       </div>
       <button class="door left" type="button" aria-controls="cab-inner" aria-expanded="false" aria-label="Open the projects cupboard"></button>
@@ -344,6 +369,15 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 
 <footer><div class="wrap">© <span id="yr">2026</span> Akshaya Pabbisetty</div></footer>
 
+<div class="pop" id="private-pop" hidden>
+  <div class="pop-card" role="alertdialog" aria-modal="true" aria-labelledby="pp-title" aria-describedby="pp-text">
+    <div class="lock" aria-hidden="true"></div>
+    <h3 id="pp-title">This project is private right now</h3>
+    <p id="pp-text">It'll be public soon so you can view it as soon as possible. Check back shortly!</p>
+    <button class="btn primary" type="button">Got it</button>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
   <figure class="lb-fig"><img alt=""><figcaption id="lb-cap"></figcaption></figure>
   <button class="lb-close" aria-label="Close">×</button>
@@ -405,26 +439,32 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') show(idx - 1);
   if (e.key === 'ArrowRight') show(idx + 1);
 });
-/* Projects bookshelf. Newest year first. Add a book by adding a line. */
+/* Projects bookshelf. Newest year first. Add a book by adding a line.
+   repo: link to the GitHub project. private: true shows the "private for now" popup instead.
+   Once a repo is public, delete "private: true" from its line and the book will link straight to it. */
+const ME = 'https://github.com/akshaya-pabbisetty/';
 const SHELVES = [
   { year: 2026, books: [
-    { title: 'Silicon A/B Testing', meta: 'Paper, ACM CHI 2026 PoliSim workshop, Barcelona', paper: true,
-      text: 'Accepted workshop paper. We built LLM "resident agents" that read emergency alerts the way different people would, then measured recall, confusion and compliance across simulated populations.', h: 205, w: 64, bg: '#FFFFFF', fg: '#14233F' },
-    { title: 'RebuildYou', meta: 'React, TypeScript, AWS, Gemini API', text: 'Full-stack AI wellness app built and deployed on AWS during a hackathon. Gemini-powered planning and coaching, with streaks and adaptive daily schedules.', h: 190, w: 56, bg: '#1D3461', fg: '#FFFFFF' },
-    { title: 'Gymmis', meta: 'React, TypeScript, JavaScript. In progress', text: 'A fitness planning and workout tracking web app I am building now, starting with a responsive front end and UI architecture.', h: 168, w: 46, bg: '#5A6272', fg: '#FFFFFF' },
-    { title: 'Low-level C', meta: 'C, Unix/Linux, GCC, Makefiles', text: 'CS 262 labs and projects: linked lists, stacks, queues and manual memory management, built and debugged with GCC and Makefiles on Unix.', h: 178, w: 50, bg: '#C9CFD9', fg: '#14233F', lean: true }
+    { title: 'Silicon A/B Testing', paper: true, repo: 'https://github.com/DriftKing-byte/PoliSim',
+      meta: 'Paper, ACM CHI 2026 PoliSim workshop, Barcelona', text: 'Accepted workshop paper on LLM "resident agents" that stress-test emergency alerts.', h: 205, w: 64, bg: '#FFFFFF', fg: '#14233F' },
+    { title: 'SaferSync', repo: ME + 'SaferSync', private: true, h: 184, w: 54, bg: '#2F4A7A', fg: '#FFFFFF' },
+    { title: 'RebuildYou', repo: ME + 'RebuildYou', private: true, h: 190, w: 56, bg: '#1D3461', fg: '#FFFFFF' },
+    { title: 'Color Analysis', repo: ME + 'ColorAnalysisApp', private: true, h: 176, w: 50, bg: '#FFFFFF', fg: '#1D3461' },
+    { title: 'Data Structures', repo: ME + 'DataStructures-GMU', private: true, h: 196, w: 52, bg: '#14233F', fg: '#FFFFFF' },
+    { title: 'CS 367 in C', repo: ME + 'CS367-Fall2026', private: true, h: 170, w: 46, bg: '#5A6272', fg: '#FFFFFF' },
+    { title: 'Low-level C', repo: ME + 'CS262', private: true, h: 178, w: 48, bg: '#C9CFD9', fg: '#14233F' },
+    { title: 'Gymmis', meta: 'React, TypeScript, JavaScript. In progress', text: 'A fitness planning and workout tracking web app I am building now.', h: 168, w: 46, bg: '#8A94A6', fg: '#FFFFFF', lean: true }
   ]},
   { year: 2025, books: [
     { title: 'Emergency Alert AI', meta: 'Python, JSON. GMU research, Nov 2025 to now', text: 'Research assistant work: Python workflows and JSON pipelines that process emergency alert datasets and test LLM-generated response recommendations for accuracy and consistency.', h: 200, w: 58, bg: '#14233F', fg: '#FFFFFF' },
     { title: 'AI in Cancer Diagnosis', meta: 'Honors College research, Aug to Dec 2025', text: 'Studied how AI can support early cancer detection in low-resource healthcare settings, and the ethical, technical and access barriers in the way.', h: 212, w: 52, bg: '#FFFFFF', fg: '#1D3461' },
-    { title: 'EventGenie', meta: 'TypeScript, JavaScript. Hackathon, Oct 2025', text: 'AI-powered event planning web app built at a hackathon, with recommendations that adapt to what you tell it.', h: 176, w: 54, bg: '#2F4A7A', fg: '#FFFFFF' },
+    { title: 'EventGenie', repo: 'https://github.com/anudeep-bonagiri/Event-Genie', private: true, h: 176, w: 54, bg: '#2F4A7A', fg: '#FFFFFF' },
     { title: 'Diamonds Data', meta: 'R, RStudio. Dec 2025', text: 'Cleaned and analyzed a diamonds dataset with statistical methods and visualizations in R.', h: 160, w: 44, bg: '#8A94A6', fg: '#FFFFFF', lean: true }
   ]},
   { year: 2023, books: [
     { title: 'Insighted Initiative', meta: 'Website for my nonprofit, 2023 to now', text: 'Built and maintain the website for Insighted Initiative, the student-led STEM nonprofit I co-founded, which has reached 150+ students in 30+ countries.', h: 196, w: 60, bg: '#1D3461', fg: '#FFFFFF' }
   ]}
 ];
-const GH = 'https://github.com/akshaya-pabbisetty';
 const cab = document.getElementById('cupboard'), shelvesEl = document.getElementById('shelves'), reader = document.getElementById('reader');
 const doors = cab.querySelectorAll('.door');
 SHELVES.forEach(s => {
@@ -434,29 +474,46 @@ SHELVES.forEach(s => {
   shelf.setAttribute('aria-label', 'Projects from ' + s.year);
   shelf.innerHTML = `<span class="year" aria-hidden="true">${s.year}</span>`;
   s.books.forEach(b => {
-    const el = document.createElement('button');
-    el.type = 'button';
+    const el = document.createElement(b.repo && !b.private ? 'a' : 'button');
     el.className = 'book' + (b.lean ? ' lean' : '') + (b.paper ? ' paper' : '');
-    el.style.cssText = `height:${Math.max(Math.round(b.h*.74), b.title.length*8 + (b.paper?58:36))}px;width:${Math.round(b.w*.92)}px;background:${b.bg};color:${b.fg}`;
-    el.setAttribute('aria-pressed', 'false');
+    el.style.cssText = `height:${Math.max(Math.round(b.h*.74), b.title.length*8 + (b.paper?58:36))}px;width:${Math.round(b.w*(innerWidth < 560 ? .6 : .92))}px;background:${b.bg};color:${b.fg}`;
     el.innerHTML = `<span>${b.title}</span>`;
-    el.onclick = () => pick(el, b, s.year);
+    if (b.repo && !b.private) {
+      el.href = b.repo; el.target = '_blank'; el.rel = 'noopener';
+      el.title = 'Open ' + b.title + ' on GitHub';
+    } else if (b.repo) {
+      el.type = 'button'; el.title = 'Open ' + b.title + ' on GitHub';
+      el.onclick = () => privatePop(b, el);
+    } else {
+      el.type = 'button'; el.setAttribute('aria-pressed', 'false');
+      el.onclick = () => pick(el, b);
+    }
     shelf.appendChild(el);
   });
   shelvesEl.appendChild(shelf);
 });
-function pick(el, b, year){
-  cab.querySelectorAll('.book').forEach(x => x.setAttribute('aria-pressed', 'false'));
+function pick(el, b){
+  cab.querySelectorAll('.book[aria-pressed]').forEach(x => x.setAttribute('aria-pressed', 'false'));
   el.setAttribute('aria-pressed', 'true');
-  reader.innerHTML = `<div class="row"><h3>${b.title}</h3><a class="btn" href="${GH}" target="_blank" rel="noopener">See it on GitHub</a></div>
-    <div class="meta">${b.meta}</div><p>${b.text}</p>`;
+  reader.innerHTML = `<h3>${b.title}</h3><div class="meta">${b.meta}</div><p>${b.text}</p>`;
 }
-function setOpen(open){
+const pop = document.getElementById('private-pop');
+let popReturn = null;
+function privatePop(b, el){
+  popReturn = el;
+  document.getElementById('pp-title').textContent = b.title + ' is private right now';
+  pop.hidden = false;
+  pop.querySelector('button').focus();
+}
+function closePop(){ pop.hidden = true; popReturn && popReturn.focus(); }
+pop.addEventListener('click', e => { if (e.target === pop || e.target.closest('button')) closePop(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pop.hidden) closePop(); });
+function setOpen(open, focusBook){
   cab.classList.toggle('open', open);
   doors.forEach(d => d.setAttribute('aria-expanded', String(open)));
-  if (open) setTimeout(() => cab.querySelector('.book').focus({preventScroll:true}), 600);
+  if (open && focusBook) setTimeout(() => cab.querySelector('.book').focus({preventScroll:true}), 600);
 }
-doors.forEach(d => d.onclick = () => setOpen(true));
+doors.forEach(d => d.onclick = () => setOpen(true, true));
 document.getElementById('close-cab').onclick = () => { setOpen(false); doors[0].focus(); };
 
 /* Page switching: the Menu in the top left shows one page at a time. */
@@ -470,13 +527,15 @@ function route(){
   const id = (location.hash || '#home').slice(1);
   const page = pages.find(p => p.id === id) || pages[0];
   pages.forEach(p => p.classList.toggle('active', p === page));
-  menuList.querySelectorAll('a').forEach(a => a.getAttribute('href') === '#' + page.id ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
+  document.querySelectorAll('.menu-list a, .toplinks a').forEach(a => a.getAttribute('href') === '#' + page.id ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
   setMenu(false);
-  window.scrollTo(0, 0);
+  window.scrollTo(0, 0); requestAnimationFrame(() => window.scrollTo(0, 0)); setTimeout(() => window.scrollTo(0, 0), 60);
   if (page.id !== 'code') setOpen(false);
   else setTimeout(() => setOpen(true), 350);
 }
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.addEventListener('hashchange', route);
+window.addEventListener('load', () => window.scrollTo(0, 0));
 route();
 </script>
 </body>
