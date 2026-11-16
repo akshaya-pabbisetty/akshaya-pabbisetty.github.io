@@ -75,20 +75,59 @@ h2{margin:0;font-weight:780;font-variation-settings:"opsz" 96,"wdth" 85;
 .lede{color:var(--muted);max-width:30em;margin:12px 0 0}
 h3{margin:0;font-size:1.25rem;line-height:1.25;font-weight:700;letter-spacing:-.01em}
 
-/* projects */
-.paper-feature{background:var(--cobalt);color:var(--on-cobalt);border-radius:28px;
-  padding:clamp(28px,4vw,48px);margin-bottom:clamp(32px,5vw,48px);display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,48px);align-items:start}
-.paper-feature .where{font-weight:700;font-size:1rem;opacity:.85;white-space:nowrap}
-.paper-feature h3{font-size:clamp(1.5rem,2.6vw,2.1rem);font-variation-settings:"opsz" 60;letter-spacing:-.02em;max-width:22em}
-.paper-feature p{margin:14px 0 0;max-width:40em;opacity:.92}
-@media (max-width:700px){.paper-feature{grid-template-columns:1fr}}
-.projects{list-style:none;margin:0;padding:0}
-.projects li{display:grid;grid-template-columns:220px 1fr 200px;gap:12px 32px;
-  padding:24px 0;border-bottom:1px solid var(--line);align-items:baseline}
-.projects li:first-child{border-top:1px solid var(--line)}
-.projects p{margin:0;color:var(--muted);max-width:44em}
-.stack{font-size:.92rem;color:var(--muted);text-align:right}
-@media (max-width:760px){.projects li{grid-template-columns:1fr}.stack{text-align:left}}
+/* projects: cupboard + shelves */
+:root{--cab-in:#E3E7ED;--board:#AEB7C5;--board-top:#C8CFDA;--door:#1D3461;--door-edge:#14233F}
+@media (prefers-color-scheme:dark){:root{--cab-in:#1E2633;--board:#3A4558;--board-top:#4A566B;--door:#22396A;--door-edge:#14233F}}
+#code{overflow-x:clip}
+.cupboard{position:relative;perspective:2200px;border:14px solid var(--navy-deep);border-radius:12px;
+  background:var(--cab-in);box-shadow:0 30px 60px -30px rgba(20,35,63,.45)}
+.cab-inner{padding:clamp(18px,3vw,32px) clamp(14px,3vw,32px) clamp(20px,3vw,32px);min-height:520px}
+.door{all:unset;position:absolute;top:0;bottom:0;width:50%;cursor:pointer;z-index:5;
+  background:var(--door);box-shadow:inset 0 0 0 14px var(--door),inset 0 0 0 16px rgba(255,255,255,.18),inset 0 0 0 40px var(--door),inset 0 0 0 41px rgba(0,0,0,.25);
+  transition:transform 1.1s cubic-bezier(.3,.7,.2,1),filter 1.1s;backface-visibility:hidden}
+.door.left{left:0;transform-origin:left center;border-right:1px solid var(--door-edge)}
+.door.right{right:0;transform-origin:right center;border-left:1px solid var(--door-edge)}
+.door::after{content:"";position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:#F2F4F7;
+  box-shadow:0 2px 4px rgba(0,0,0,.4);transform:translateY(-50%)}
+.door.left::after{right:22px}.door.right::after{left:22px}
+.door:hover{filter:brightness(1.12)}
+.door:focus-visible{outline:3px solid #FFFFFF;outline-offset:-8px}
+.door-tag{position:absolute;z-index:6;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;
+  background:#FFFFFF;color:var(--door-edge);border-radius:6px;padding:12px 18px;text-align:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.3);transition:opacity .3s;font-weight:700;line-height:1.3}
+.door-tag small{display:block;font-weight:500;font-size:.85rem;color:#5A6272}
+.cupboard.open .door.left{transform:rotateY(-108deg);filter:brightness(.7)}
+.cupboard.open .door.right{transform:rotateY(108deg);filter:brightness(.7)}
+.cupboard.open .door{pointer-events:none}
+.cupboard.open .door-tag{opacity:0}
+.shelf{position:relative;display:flex;align-items:flex-end;gap:5px;padding:44px 18px 0 150px;min-height:250px;
+  border-bottom:16px solid var(--board);overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}
+.shelf + .shelf{margin-top:28px}
+.shelf::after{content:"";position:absolute;left:0;right:0;bottom:-16px;height:4px;background:var(--board-top)}
+.year{position:absolute;left:14px;bottom:12px;font-weight:800;font-variation-settings:"opsz" 96,"wdth" 75;
+  font-size:3.2rem;line-height:1;color:var(--board);letter-spacing:-.03em}
+.book{all:unset;box-sizing:border-box;flex:none;cursor:pointer;position:relative;border-radius:3px 3px 1px 1px;
+  writing-mode:vertical-rl;display:flex;align-items:center;justify-content:space-between;padding:14px 0 10px;
+  font-weight:700;font-size:.95rem;letter-spacing:.01em;transform-origin:bottom center;
+  box-shadow:inset 3px 0 0 rgba(255,255,255,.14),inset -4px 0 0 rgba(0,0,0,.18);transition:transform .25s ease}
+.book small{font-weight:500;font-size:.72rem;opacity:.75}
+.book::before{content:"";position:absolute;left:0;right:0;top:22px;height:3px;background:currentColor;opacity:.35}
+.book:hover{transform:translateY(-8px)}
+.book.lean{transform:rotate(-7deg);margin-left:10px}
+.book.lean:hover{transform:rotate(-7deg) translateY(-8px)}
+.book[aria-pressed="true"]{transform:translateY(-22px)}
+.book:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+.book.paper::before{top:20px;height:8px;opacity:1;background:var(--cobalt)}
+.book.paper{padding-top:40px}
+.reader{margin-top:28px;background:var(--paper);border-radius:10px;padding:clamp(20px,3vw,32px);
+  border:1px solid var(--line);min-height:140px}
+.reader .empty-note{color:var(--muted);margin:0}
+.reader .meta{color:var(--cobalt);font-weight:600;margin:6px 0 10px}
+.reader p{margin:0;max-width:44em}
+.reader .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.close-cab{all:unset;cursor:pointer;color:var(--muted);font-size:.92rem;text-decoration:underline;margin-top:14px;display:inline-block}
+.close-cab:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+@media (max-width:560px){.shelf{padding-left:18px;padding-top:70px}.year{top:10px;bottom:auto;font-size:2rem}.cab-inner{min-height:440px}}
 .skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:36px;padding:0;list-style:none}
 .skills li{padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:.92rem;background:var(--paper)}
 
@@ -148,7 +187,7 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   <div class="wrap">
     <a class="mark" href="#top">Akshaya Pabbisetty</a>
     <ul>
-      <li><a href="#code">GitHub</a></li>
+      <li><a href="#code">Projects</a></li>
       <li><a href="#experience">LinkedIn</a></li>
       <li><a href="#modeling">Modeling</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -177,28 +216,22 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   <div class="wrap">
     <div class="head">
       <div>
-        <h2>Code &amp; research</h2>
-        <p class="lede">Projects I've built, mostly with React, TypeScript and Python, plus research on LLM systems.</p>
+        <h2>Projects</h2>
+        <p class="lede">One shelf for every year: apps, research and a published paper. Open the cupboard and pull a book.</p>
       </div>
       <a class="btn" href="https://github.com/akshaya-pabbisetty" target="_blank" rel="noopener">View my GitHub</a>
     </div>
 
-    <article class="paper-feature">
-      <div class="where">ACM CHI 2026<br>Barcelona</div>
-      <div>
-        <h3>Silicon A/B Testing for Emergency Alerts: Rapid Pre-Deployment Stress Tests with LLM Resident Agents</h3>
-        <p>Accepted paper at the PoliSim workshop. We built LLM "resident agents" that read emergency alerts the way different people would, then measured recall, confusion and compliance across simulated populations.</p>
+    <div class="cupboard" id="cupboard">
+      <div class="cab-inner" id="cab-inner">
+        <div id="shelves"></div>
+        <div class="reader" id="reader" aria-live="polite"><p class="empty-note">Pick a book off the shelf to read about it.</p></div>
+        <button class="close-cab" id="close-cab" type="button">Close the cupboard</button>
       </div>
-    </article>
-
-    <ul class="projects">
-      <li><h3>RebuildYou</h3><p>Full-stack AI wellness app built and deployed on AWS during a hackathon. Gemini-powered planning and coaching, with streaks and adaptive daily schedules.</p><span class="stack">React, TypeScript, AWS, Gemini</span></li>
-      <li><h3>Gymmis</h3><p>A fitness planning and workout tracking web app. In progress.</p><span class="stack">React, TypeScript</span></li>
-      <li><h3>EventGenie</h3><p>AI-powered event planner built at a hackathon, with recommendations that adapt to what you tell it.</p><span class="stack">TypeScript, JavaScript</span></li>
-      <li><h3>Emergency alert LLM pipelines</h3><p>Research assistant work at GMU: Python and JSON pipelines that process alert datasets and evaluate LLM-generated emergency recommendations.</p><span class="stack">Python, JSON</span></li>
-      <li><h3>Low-level C projects</h3><p>Linked lists, stacks, queues and manual memory management in C, built with GCC and Makefiles on Unix.</p><span class="stack">C, Unix</span></li>
-      <li><h3>Diamonds dataset analysis</h3><p>Statistical analysis and visualization of a diamonds dataset in R.</p><span class="stack">R, RStudio</span></li>
-    </ul>
+      <button class="door left" type="button" aria-controls="cab-inner" aria-expanded="false" aria-label="Open the projects cupboard"></button>
+      <button class="door right" type="button" aria-controls="cab-inner" aria-expanded="false" aria-label="Open the projects cupboard"></button>
+      <div class="door-tag" aria-hidden="true">My projects<small>Click to open</small></div>
+    </div>
 
     <ul class="skills" aria-label="Skills">
       <li>Python</li><li>Java</li><li>C</li><li>JavaScript</li><li>TypeScript</li><li>R</li><li>React</li><li>Vite</li><li>AWS</li><li>Gemini API</li><li>Git</li><li>Linux</li><li>Prompt engineering</li><li>LLM evaluation</li>
@@ -320,6 +353,61 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') show(idx - 1);
   if (e.key === 'ArrowRight') show(idx + 1);
 });
+/* Projects bookshelf. Newest year first. Add a book by adding a line. */
+const SHELVES = [
+  { year: 2026, books: [
+    { title: 'Silicon A/B Testing', meta: 'Paper, ACM CHI 2026 PoliSim workshop, Barcelona', paper: true,
+      text: 'Accepted workshop paper. We built LLM "resident agents" that read emergency alerts the way different people would, then measured recall, confusion and compliance across simulated populations.', h: 205, w: 64, bg: '#FFFFFF', fg: '#14233F' },
+    { title: 'RebuildYou', meta: 'React, TypeScript, AWS, Gemini API', text: 'Full-stack AI wellness app built and deployed on AWS during a hackathon. Gemini-powered planning and coaching, with streaks and adaptive daily schedules.', h: 190, w: 56, bg: '#1D3461', fg: '#FFFFFF' },
+    { title: 'Gymmis', meta: 'React, TypeScript, JavaScript. In progress', text: 'A fitness planning and workout tracking web app I am building now, starting with a responsive front end and UI architecture.', h: 168, w: 46, bg: '#5A6272', fg: '#FFFFFF' },
+    { title: 'Low-level C', meta: 'C, Unix/Linux, GCC, Makefiles', text: 'CS 262 labs and projects: linked lists, stacks, queues and manual memory management, built and debugged with GCC and Makefiles on Unix.', h: 178, w: 50, bg: '#C9CFD9', fg: '#14233F', lean: true }
+  ]},
+  { year: 2025, books: [
+    { title: 'Emergency Alert AI', meta: 'Python, JSON. GMU research, Nov 2025 to now', text: 'Research assistant work: Python workflows and JSON pipelines that process emergency alert datasets and test LLM-generated response recommendations for accuracy and consistency.', h: 200, w: 58, bg: '#14233F', fg: '#FFFFFF' },
+    { title: 'AI in Cancer Diagnosis', meta: 'Honors College research, Aug to Dec 2025', text: 'Studied how AI can support early cancer detection in low-resource healthcare settings, and the ethical, technical and access barriers in the way.', h: 212, w: 52, bg: '#FFFFFF', fg: '#1D3461' },
+    { title: 'EventGenie', meta: 'TypeScript, JavaScript. Hackathon, Oct 2025', text: 'AI-powered event planning web app built at a hackathon, with recommendations that adapt to what you tell it.', h: 176, w: 54, bg: '#2F4A7A', fg: '#FFFFFF' },
+    { title: 'Diamonds Data', meta: 'R, RStudio. Dec 2025', text: 'Cleaned and analyzed a diamonds dataset with statistical methods and visualizations in R.', h: 160, w: 44, bg: '#8A94A6', fg: '#FFFFFF', lean: true }
+  ]},
+  { year: 2023, books: [
+    { title: 'Insighted Initiative', meta: 'Website for my nonprofit, 2023 to now', text: 'Built and maintain the website for Insighted Initiative, the student-led STEM nonprofit I co-founded, which has reached 150+ students in 30+ countries.', h: 196, w: 60, bg: '#1D3461', fg: '#FFFFFF' }
+  ]}
+];
+const GH = 'https://github.com/akshaya-pabbisetty';
+const cab = document.getElementById('cupboard'), shelvesEl = document.getElementById('shelves'), reader = document.getElementById('reader');
+const doors = cab.querySelectorAll('.door');
+SHELVES.forEach(s => {
+  const shelf = document.createElement('div');
+  shelf.className = 'shelf';
+  shelf.setAttribute('role', 'group');
+  shelf.setAttribute('aria-label', 'Projects from ' + s.year);
+  shelf.innerHTML = `<span class="year" aria-hidden="true">${s.year}</span>`;
+  s.books.forEach(b => {
+    const el = document.createElement('button');
+    el.type = 'button';
+    el.className = 'book' + (b.lean ? ' lean' : '') + (b.paper ? ' paper' : '');
+    el.style.cssText = `height:${b.h}px;width:${b.w}px;background:${b.bg};color:${b.fg}`;
+    el.setAttribute('aria-pressed', 'false');
+    el.innerHTML = `<span>${b.title}</span><small>${String(s.year).slice(2)}</small>`;
+    el.onclick = () => pick(el, b, s.year);
+    shelf.appendChild(el);
+  });
+  shelvesEl.appendChild(shelf);
+});
+function pick(el, b, year){
+  cab.querySelectorAll('.book').forEach(x => x.setAttribute('aria-pressed', 'false'));
+  el.setAttribute('aria-pressed', 'true');
+  reader.innerHTML = `<div class="row"><h3>${b.title}</h3><a class="btn" href="${GH}" target="_blank" rel="noopener">See it on GitHub</a></div>
+    <div class="meta">${b.meta}</div><p>${b.text}</p>`;
+}
+function setOpen(open){
+  cab.classList.toggle('open', open);
+  doors.forEach(d => d.setAttribute('aria-expanded', String(open)));
+  if (open) setTimeout(() => cab.querySelector('.book').focus({preventScroll:true}), 600);
+}
+doors.forEach(d => d.onclick = () => setOpen(true));
+document.getElementById('close-cab').onclick = () => { setOpen(false); doors[0].focus(); };
+document.querySelectorAll('a[href="#code"]').forEach(a => a.addEventListener('click', () => setTimeout(() => setOpen(true), 450)));
+if (location.hash === '#code') setTimeout(() => setOpen(true), 500);
 </script>
 </body>
 </html>
